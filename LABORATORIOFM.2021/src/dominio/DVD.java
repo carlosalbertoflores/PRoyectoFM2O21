@@ -12,7 +12,7 @@ package dominio;
 public class DVD {
     String  ID; 
   String  Nombre;
-  String Clasificacion; 
+  String casificacion  
   String Valor; 
 
     public String getID() {

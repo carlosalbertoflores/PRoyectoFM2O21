@@ -1,6 +1,7 @@
 package datos;
 
 
+import dominio.DVD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -21,18 +22,18 @@ import java.util.List;
  */
 public class DVDDAO {
     
-        private static final String SQL_INSERT = "INSERT INTO tbl_cliente(Id_cliente,cliente,Monto,Estatus_Cliente ,Nit,telefono,producto) VALUES(?, ?,?, ?,?, ?,?)";
-    private static final String SQL_SELECT = "SELECT Id_cliente, cliente,Monto,Estatus_Cliente ,Nit,telefono,producto FROM tbl_cliente";
-    private static final String SQL_QUERY = "SELECT cliente,Monto,Estatus_Cliente ,Nit,telefono,producto,Id_cliente FROM tbl_cliente WHERE Id_cliente = ?";
-  private static final String SQL_UPDATE = "UPDATE tbl_cliente SET  Id_cliente =  ?, cliente= ?, Nit= ?, Monto= ?, Estatus_Cliente=  ?,  telefono= ?, producto= ? WHERE Id_cliente";
-    private static final String SQL_DELETE = "DELETE FROM tbl_cliente  WHERE Id_cliente = ? ";
+       private static final String SQL_INSERT = "INSERT INTO LaboratioFM2021A(ID,Nombre,Clasificacion,valor) VALUES(?, ?,?, ?)";
+    private static final String SQL_SELECT = "SELECT ID,Nombre,Clasificacion,valor FROM LaboratioFM2021A";
+    private static final String SQL_QUERY = "SELECT ID,Nombre,Clasificacion,valor FROM LaboratioFM2021A WHERE Id_cliente = ?";
+  private static final String SQL_UPDATE = "UPDATE LaboratioFM2021ASET  ID=?,Nombre=?,Clasificacion=?,valor=? WHERE Id_cliente";
+    private static final String SQL_DELETE = "DELETE FROM LaboratioFM2021A  WHERE Id_cliente = ? ";
   
-     public List<Cliente> select() {
+     public List<DVD> select() {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        Cliente venta = null;
-        List<Cliente> ventas = new ArrayList<Cliente>();
+        DVD venta = null;
+        List<  DVD> ventas = new ArrayList<  DVD>();
         try {
             /**
              *
@@ -46,13 +47,11 @@ public class DVDDAO {
                  *
                  * busqueda de datos de la bitacocora en la de usuarios
                  */
-                String id_cliente  = rs.getString("Id_cliente");
-                String cliente  = rs.getString("cliente");
-                String nit =      rs.getString("Nit");
-                String telefono = rs.getString("telefono");
-                    String producto =      rs.getString("producto");
-                  String monto = rs.getString("Monto");
-                    String estatus_cliente  = rs.getString("Estatus_Cliente");
+                String id = rs.getString("ID");
+                String nombre  = rs.getString("Nombre");
+                String clasificacion =      rs.getString("Clasificacion");
+                String valor = rs.getString("Valor");
+                  
 
                 /**
                  *
@@ -60,14 +59,12 @@ public class DVDDAO {
                  */
               
 
-                  venta = new Cliente();
-                  venta.setCliente(cliente);
-                    venta.setId_cliente(id_cliente);
-                 venta.setNit(nit);
-                 venta.setTelefono(telefono);
-                 venta.setProducto(producto);
-                    venta.setMonto(monto);
-               venta.setEstatus_Cliente(estatus_cliente);
+                  venta = new DVD();
+                  venta.setID(id);
+                    venta.setNombre(nombre);
+                 venta.setClasificacion(clasificacion );
+                 venta.setValor(valor);
+               
                     ventas.add(venta);
             }
 
@@ -82,7 +79,7 @@ public class DVDDAO {
 
        
     }
- public   Cliente query(Cliente venta){
+ public   DVD query(DVD venta){
         /**
          *
          * conexion de base de datos
@@ -90,39 +87,36 @@ public class DVDDAO {
         Connection conn = null;
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<Cliente> ventas = new ArrayList<Cliente>();
+        List<DVD> ventas = new ArrayList<DVD>();
         int rows = 0;
 
         try {
             conn = Conexion.getConnection();
             System.out.println("Ejecutando query:" + SQL_QUERY);
             stmt = conn.prepareStatement(SQL_QUERY);
-             stmt.setString(1, venta.getId_cliente());
+             stmt.setString(1, venta.getID());
           
             rs = stmt.executeQuery();
             while (rs.next()) {
               
-                String cliente  = rs.getString("Cliente");
-                String nit =      rs.getString("Nit");
-                String telefono = rs.getString("telefono");
-                    String producto =      rs.getString("producto");
-                  String monto = rs.getString("Monto");
-                    String estatus_cliente  = rs.getString("Estatus_Cliente");
-                  String id = rs.getString("Id_cliente");
+               String id = rs.getString("ID");
+                String nombre  = rs.getString("Nombre");
+                String clasificacion =      rs.getString("Clasificacion");
+                String valor = rs.getString("Valor");
+                  
+
                 /**
                  *
                  * concatenacionde de variables de de busqueda
                  */
               
 
-                  venta = new Cliente();
-                  venta.setCliente(cliente);
-              venta.setId_cliente(id);
-                 venta.setNit(nit);
-                 venta.setTelefono(telefono);
-                 venta.setProducto(producto);
-                    venta.setMonto(monto);
-               venta.setEstatus_Cliente(estatus_cliente);
+                  venta = new DVD();
+                  venta.setID(id);
+                    venta.setNombre(nombre);
+                 venta.setClasificacion(clasificacion );
+                 venta.setValor(valor);
+               
                     ventas.add(venta);
                 /**
                  *
@@ -144,7 +138,7 @@ public class DVDDAO {
 
     
      }
-     public int insert(Cliente insertar)  {
+     public int insert(DVD insertar)  {
          ResultSet rs = null;
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -155,13 +149,11 @@ public class DVDDAO {
             
             conn = Conexion.getConnection();
             stmt = conn.prepareStatement(SQL_INSERT);
-            stmt.setString(1,  insertar.getId_cliente());
-            stmt.setString(2,  insertar.getCliente());       
-            stmt.setString(3,   insertar.getNit());
-             stmt.setString(4,  insertar.getMonto());
-                stmt.setString(5,  insertar.getEstatus_Cliente());
-            stmt.setString(6,  insertar.getTelefono());
-             stmt.setString(7,  insertar.getProducto());
+            stmt.setString(1,  insertar.getID());
+            stmt.setString(2,  insertar.getNombre());       
+            stmt.setString(3,   insertar.getClasificacion());
+             stmt.setString(4,  insertar.getValor());
+     
 
             System.out.println("ejecutando query:" + SQL_INSERT);
             rows = stmt.executeUpdate();
@@ -176,7 +168,7 @@ public class DVDDAO {
 
         return rows;
     }
-       public int update(Cliente mod) {
+       public int update(DVD mod) {
         Connection conn = null;
         PreparedStatement stmt = null;
         int rows = 0;
@@ -185,13 +177,10 @@ public class DVDDAO {
             conn = Conexion.getConnection();
             System.out.println("ejecutando query: " + SQL_UPDATE);
             stmt = conn.prepareStatement(SQL_UPDATE);
-            stmt.setString(1,   mod.getId_cliente());
-            stmt.setString(2,   mod.getCliente());       
-            stmt.setString(3,    mod.getNit());
-             stmt.setString(4,   mod.getMonto());
-             stmt.setString(5,   mod.getEstatus_Cliente());
-            stmt.setString(6,   mod.getTelefono());
-             stmt.setString(7,  mod.getProducto());
+           stmt.setString(1,  mod.getID());
+            stmt.setString(2,  mod.getNombre());       
+            stmt.setString(3,   mod.getClasificacion());
+             stmt.setString(4,  mod.getValor());
    rows = stmt.executeUpdate();
          
             System.out.println("Registros actualizado:" + rows);
@@ -206,7 +195,7 @@ public class DVDDAO {
         return rows;
     }
 
-       public int delete(Cliente eliminar) {
+       public int delete(DVD eliminar) {
         
         Connection conn = null;
         PreparedStatement stmt = null;
@@ -218,7 +207,7 @@ public class DVDDAO {
             stmt = conn.prepareStatement(SQL_DELETE);
            
            System.out.println("Ejecutando query:" + SQL_DELETE);
-               stmt.setString(1,  eliminar.getId_cliente());
+               stmt.setString(1,  eliminar.getID());
          
             rows = stmt.executeUpdate();
             System.out.println("Registros afectados:" + rows);
@@ -231,6 +220,5 @@ public class DVDDAO {
 
         return rows;
     }
-     
     
 }
